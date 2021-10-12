@@ -12,22 +12,51 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'));
 
 
+
+const productSchema = mongoose.Schema({
+    name: String,
+    image: String,
+    countInStock: Number
+})
+
+const Product = mongoose.model('Product', productSchema)
+
+
+
 require('dotenv/config');
 
 const api = process.env.API_URL
 
-app.post(`${api}`/products, (req, res) => {
-    const newProduct = req.body 
-    const product = {
-        id: 1,
-        name: 'hair dresser',
-        image: 'img-url'
-    }
+app.post(`${api}/products`, (req, res) => {
+    const product = new Product({
+        name: req.body.name,
+        image: req.body.image,
+        countInStock: req.body.countInStock
+    })
 
-    res.send('Hello API !')
+    product.save().then((createdProduct => {
+        res.status(201).json(createdProduct)
+        
+    })).catch((err)=> {
+        res.status(500).json({
+            error: err,
+            success: false
+        })
+    })
+    res.send(newProduct)
 })
 
-mongoose.connect('mongodb+srv://admin:admin @cluster0.wwxbb.mongodb.net/eshop-database?retryWrites=true&w=majority')
+mongoose.connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'eshop-database'
+})
+.then( ()=> {
+    console.log('Database Connection is ready...')
+})
+.catch((err) => {
+    console.log('Database did not connect...')
+})
 
 app.listen(3000, () => {
     console.log(api);
