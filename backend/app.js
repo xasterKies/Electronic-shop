@@ -27,7 +27,7 @@ app.post(`${api}`/products, (req, res) => {
     res.send('Hello API !')
 })
 
-mongoose.connect
+mongoose.connect('mongodb+srv://admin:admin @cluster0.wwxbb.mongodb.net/eshop-database?retryWrites=true&w=majority')
 
 app.listen(3000, () => {
     console.log(api);
