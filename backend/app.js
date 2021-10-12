@@ -16,10 +16,11 @@ app.use(morgan('tiny'));
 const productSchema = mongoose.Schema({
     name: String,
     image: String,
-    countInStock: Number
+    countInStock: {
+        type: Number,
+        required: true
+    }
 })
-
-const Product = mongoose.model('Product', productSchema)
 
 
 
@@ -36,7 +37,7 @@ app.post(`${api}/products`, (req, res) => {
 
     product.save().then((createdProduct => {
         res.status(201).json(createdProduct)
-        
+
     })).catch((err)=> {
         res.status(500).json({
             error: err,
@@ -44,6 +45,10 @@ app.post(`${api}/products`, (req, res) => {
         })
     })
     res.send(newProduct)
+})
+
+app.get(`${api}/products`, async (req, res) => {
+
 })
 
 mongoose.connect(process.env.CONNECTION_STRING, {
