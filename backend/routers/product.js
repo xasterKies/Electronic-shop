@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const Product = require('../models/products')
 
 
 
-router.post(`${api}/products`, (req, res) => {
+router.post(`/`, (req, res) => {
     const product = new Product({
         name: req.body.name,
         image: req.body.image,
@@ -23,7 +24,7 @@ router.post(`${api}/products`, (req, res) => {
 })
 
 
-router.get(`${api}/products`, async (req, res) => {
+router.get(`/`, async (req, res) => {
     const productList = await Product.find();
 
     if(!productList) {
@@ -33,4 +34,4 @@ router.get(`${api}/products`, async (req, res) => {
 })
 
 
-module.export = router;
+module.export = router; 
