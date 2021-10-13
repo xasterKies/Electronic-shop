@@ -9,16 +9,18 @@ const mongoose = require('mongoose')
 app.use(bodyParser.json())
 app.use(morgan('tiny'));
 
-const productSchema = mongoose.Schema({
-    name: String,
-    image: String,
-    countInStock: {
-        type: Number,
-        required: true
-    }
-})
 
+const api = process.env.API_URL
 require('dotenv/config');
+
+
+app.use(`${api}/products`, productRouter)
+
+
+const Product = require('../models/products')
+
+
+
 
 mongoose.connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
