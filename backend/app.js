@@ -9,7 +9,11 @@ const api = process.env.API_URL
 require('dotenv/config');
 
 
-const productsRouter = require('./routers/product')
+//Routes
+const productsRoutes = require('./routes/product')
+const categoriesRoutes require('./routes/categories')
+const usersRoutes require('./routes/users')
+const odersRoutes require('./routes/orderss')
 
 
 //Middleware
@@ -17,9 +21,10 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'));
 
 
-//Routes
-app.use(`${api}/products`, productsRouter)
-
+app.use(`${api}/products`, productsRoutes)
+app.use(`${api}/categories`, categoriesRoutes)
+app.use(`${api}/products`, productsRoutes)
+app.use(`${api}/products`, productsRoutes)
 
 //Database
 mongoose.connect(process.env.CONNECTION_STRING, {
