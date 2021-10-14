@@ -3,6 +3,10 @@ const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const mongoose = require('mongoose')
+const cors = require('cors')
+
+app.use(cors());
+app.options('*', cors())
 
 
 const api = process.env.API_URL
@@ -11,9 +15,10 @@ require('dotenv/config');
 
 //Routes
 const productsRoutes = require('./routes/products')
-const categoriesRoutes require('./routes/categories')
-const usersRoutes require('./routes/users')
-const odersRoutes require('./routes/orders')
+const categoriesRoutes = require('./routes/categories')
+const usersRoutes = require('./routes/users')
+const odersRoutes = require('./routes/orders');
+const { application } = require('express');
 
 
 //Middleware
