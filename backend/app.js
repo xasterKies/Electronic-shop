@@ -10,10 +10,10 @@ require('dotenv/config');
 
 
 //Routes
-const productsRoutes = require('./routes/product')
+const productsRoutes = require('./routes/products')
 const categoriesRoutes require('./routes/categories')
 const usersRoutes require('./routes/users')
-const odersRoutes require('./routes/orderss')
+const odersRoutes require('./routes/orders')
 
 
 //Middleware
