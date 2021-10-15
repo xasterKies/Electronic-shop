@@ -35,6 +35,22 @@ router.post('/', async (req, res) => {
     res.send(category)
 })
 
+router.put('/:id' ,async (req, res) => {
+    const category = await Category.findByIdAndUpdate(
+        req.param.id,
+        {
+            name: req.body.name,
+            icon: req.body.icon,
+            color: req.body.color
+        }
+    )
+
+    if(!category)
+    return res.status(400).send('The category cannot be created!')
+
+    res.send(category)
+})
+
 router.delete('/:id', (req, res) => {
     Category.findByIdAndRemove(req.params.id).then(category => {
         if(category) {
