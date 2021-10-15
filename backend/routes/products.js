@@ -40,5 +40,14 @@ router.get(`/`, async (req, res) => {
     res.send(productList)
 })
 
+router.get(`/:id`, async (req, res) => {
+    const product = await Product.find(ById(req.params.id));
+
+    if(!product) {
+        res.status(500).json({sucess: false})
+    }
+    res.send(product)
+})
+
 
 module.exports = router; 
