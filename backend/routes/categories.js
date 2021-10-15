@@ -42,7 +42,8 @@ router.put('/:id' ,async (req, res) => {
             name: req.body.name,
             icon: req.body.icon,
             color: req.body.color
-        }
+        },
+        { new: true }
     )
 
     if(!category)
