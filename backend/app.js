@@ -17,8 +17,7 @@ require('dotenv/config');
 const productsRoutes = require('./routes/products')
 const categoriesRoutes = require('./routes/categories')
 const usersRoutes = require('./routes/users')
-const odersRoutes = require('./routes/orders');
-const { application } = require('express');
+const ordersRoutes = require('./routes/orders');
 
 
 //Middleware
