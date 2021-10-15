@@ -32,7 +32,7 @@ router.post(`/`, async (req, res) => {
 
 
 router.get(`/`, async (req, res) => {
-    const productList = await Product.find();
+    const productList = await Product.find().select('name image -_id');
 
     if(!productList) {
         res.status(500).json({sucess: false})
