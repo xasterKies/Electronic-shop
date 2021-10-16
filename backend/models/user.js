@@ -43,6 +43,7 @@ const userSchema = mongoose.Schema({
    }
 })
 
+//For frontend friendly id
 userSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });
@@ -52,3 +53,4 @@ userSchema.set('toJSON', {
 })
 
 exports.User = mongoose.model('User', userSchema)
+exports.userSchema = userSchema;
