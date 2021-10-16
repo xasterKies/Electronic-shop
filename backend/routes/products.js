@@ -2,6 +2,7 @@ const express = require('express');
 const { Category } = require('../models/category');
 const router = express.Router();
 const Product = require('../models/product')
+const mongoose = require('mongoose');
 
 
 
@@ -39,16 +40,21 @@ router.get(`/`, async (req, res) => {
     res.send(productList)
 })
 
-router.get(`/:id`, async (req, res) => {
-    const product = await Product.findById(req.params.id).populate('category');
+router.get(`/get/count`, async (req, res) => {
+    const productCount = await Product.countDocuments((count) => count)
 
-    if(!product) {
+    if(!productCount) {
         res.status(500).json({sucess: false})
     }
-    res.send(product)
+    res.send({
+        productCount: productCount
+    })
 })
 
 router.put(`/:id`, async (req, res) => {
+    if(mongoose.isValidObjectId(req.params.id)) {
+        res.status(400).send('Invalid Product Id');
+    }
     const category = await Category.findById(req.body.category);
     if(!category) return res.status(400).send('Invalid Category')
 
@@ -75,6 +81,21 @@ router.put(`/:id`, async (req, res) => {
     }
     res.send(product)
 })
+
+router.delete('/:id', (req, res) => {
+    Product.findByIdAndRemove(req.params.id).then(product => {
+        if(product) {
+            return res.status(200).json({success: true, message: 'The product Found'})
+        } else {
+            return res.status(404).json({success: false, message: "Product not found"})
+        }
+    }).catch(err => {
+        return res.status(500).json({success: false, error: err})
+    })
+})
+
+
+router.get('/get/count', )
 
 
 module.exports = router; 
