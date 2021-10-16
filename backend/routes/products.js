@@ -94,8 +94,9 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-router.get(`/get/featured`, async (req, res) => {
-    const product = await Product.find({isFeatured: true}) 
+router.get(`/get/featured/:count`, async (req, res) => {
+    const count = req.params.count ? req.params.count : 0
+    const product = await Product.find({isFeatured: true}).limit(+count)
 
     if(!product) {
         res.status(500).json({sucess: false})
