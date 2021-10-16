@@ -94,8 +94,16 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+router.get(`/get/featured`, async (req, res) => {
+    const product = await Product.find({isFeatured: true}) 
 
-router.get('/get/count', )
+    if(!product) {
+        res.status(500).json({sucess: false})
+    }
+    res.send(
+        product
+    )
+})
 
 
 module.exports = router; 
