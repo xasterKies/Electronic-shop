@@ -32,7 +32,13 @@ router.post(`/`, async (req, res) => {
 })
 
 router.get(`/`, async (req, res) => {
-    const productList = await Product.find().select('name image -_id');
+    //localhost:3000/api/v1/products?categories=22222,2342353
+    let filter = {}
+    if(req.query.categories) {
+        filter = {category: req.query.categories.split(',')}
+    }
+
+    const productList = await Product.find({ category: ["2342353", "555"]}).populate(category)
 
     if(!productList) {
         res.status(500).json({sucess: false})
