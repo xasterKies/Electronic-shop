@@ -26,12 +26,21 @@ router.post('/', async (req, res) => {
 })
 
 router.get(`/`, async (req, res) => {
-    const userList = await User.find();
+    const userList = await User.find().select('name phone email');
 
     if(!userList) {
         res.status(500).json({success: false})
     }
     res.send(userList)
+})
+
+router.get(`/:id`, async (req, res) => {
+    const user = await User.findById(req.params.id).select('-passwodHash');
+
+    if(!user) {
+        res.status(500).json({message: 'The user with the given ID was not found'})
+    }
+    res.status(200).send(user)
 })
 
 module.exports = router;
