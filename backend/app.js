@@ -4,13 +4,18 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const mongoose = require('mongoose')
 const cors = require('cors')
+require('dotenv/config');
+const authJwt = require('./helpers/jwt')
+
 
 app.use(cors());
 app.options('*', cors())
 
 
-const api = process.env.API_URL
-require('dotenv/config');
+//Middleware
+app.use(bodyParser.json())
+app.use(morgan('tiny'));
+app.use(authJwt);
 
 
 //Routes
@@ -20,10 +25,7 @@ const usersRoutes = require('./routes/users')
 const ordersRoutes = require('./routes/orders');
 
 
-//Middleware
-app.use(bodyParser.json())
-app.use(morgan('tiny'));
-
+const api = process.env.API_URL
 
 app.use(`${api}/products`, productsRoutes)
 app.use(`${api}/categories`, categoriesRoutes)
