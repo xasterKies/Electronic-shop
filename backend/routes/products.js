@@ -34,6 +34,8 @@ const uploadOptions = multer({ storage: storage })
 router.post(`/`, uploadOptions.single('image'), async (req, res) => {
 
     const category = await Category.findById(req.body.category);
+    if(!file) return res.status(400).send('No image in the request')
+
     if(!category) return res.status(400).send('Invalid Category')
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads`
     const fileName = req.file.filename
