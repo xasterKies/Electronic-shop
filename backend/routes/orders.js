@@ -61,4 +61,20 @@ router.post('/', async (req, res) => {
 })
 
 
+router.put('/:id' ,async (req, res) => {
+    const order = await Order.findByIdAndUpdate(
+        req.param.id,
+        {
+            status: req.body.status
+        },
+        { new: true }
+    )
+
+    if(!order)
+    return res.status(400).send('The order cannot be created!')
+
+    res.send(order)
+})
+
+
 module.exports = router;
